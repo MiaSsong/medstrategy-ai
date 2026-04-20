@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedStrategy AI — 의료기기 마케팅 전략</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <span class="header-logo">Med<span>Strategy</span> AI</span>
+  <span class="header-sub">의료기기 마케팅 규제 준수 전략 생성기</span>
+</header>
+
+<div class="layout">
+
+  <!-- 입력 패널 -->
+  <aside class="panel-input">
+    <h2>제품 정보 입력</h2>
+
+    <div class="field">
+      <label>제품 대분류 *</label>
+      <select id="sel-category">
+        <option value="">선택하세요</option>
+        <option value="ivd">🧪 체외진단기기 (IVD)</option>
+        <option value="img">🖥 영상진단기기</option>
+        <option value="trt">💊 치료·수술기기</option>
+        <option value="digi">💻 디지털헬스 / SaMD</option>
+        <option value="imp">🦷 이식형·매식기기</option>
+        <option value="cons">🩹 소모품·일반의료기기</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>제품 설명 * (5자 이상)</label>
+      <input id="inp-product" type="text" placeholder="예: PCR 기반 호흡기 바이러스 진단키트">
+    </div>
+
+    <div class="field">
+      <label>타겟 시장 * (복수 선택)</label>
+      <div class="market-chips" id="market-chips">
+        <span class="chip" data-code="KR">🇰🇷 한국</span>
+        <span class="chip" data-code="US">🇺🇸 미국</span>
+        <span class="chip" data-code="EU">🇪🇺 유럽</span>
+        <span class="chip" data-code="JP">🇯🇵 일본</span>
+        <span class="chip" data-code="CN">🇨🇳 중국</span>
+        <span class="chip" data-code="SEA">🌏 동남아</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>추가 컨텍스트 (선택)</label>
+      <textarea id="inp-context" placeholder="예: 신제품 론칭, 병원 직판 집중"></textarea>
+    </div>
+
+    <button class="btn-generate" id="btn-generate" onclick="handleGenerate()">
+      전략 생성하기
+    </button>
+    <div class="error-msg" id="err-msg"></div>
+  </aside>
+
+  <!-- 결과 패널 -->
+  <main class="panel-result">
+    <div class="status-bar" id="status-bar"></div>
+
+    <div class="empty-state" id="empty-state">
+      <div class="icon">📋</div>
+      <p>제품 정보를 입력하고 전략을 생성하세요</p>
+    </div>
+
+    <div id="result-area" style="display:none">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('reg', this)">📊 규제 분석</button>
+        <button class="tab-btn" onclick="switchTab('str', this)">📣 마케팅 전략</button>
+        <button class="tab-btn" onclick="switchTab('ev', this)">🗓 학회·행사</button>
+        <button class="tab-btn" onclick="switchTab('kol', this)">👥 KOL 전략</button>
+        <button class="tab-btn" onclick="switchTab('rm', this)">🗺 실행 로드맵</button>
+      </div>
+      <div id="tab-reg" class="tab-content active"></div>
+      <div id="tab-str" class="tab-content"></div>
+      <div id="tab-ev"  class="tab-content"></div>
+      <div id="tab-kol" class="tab-content"></div>
+      <div id="tab-rm"  class="tab-content"></div>
+    </div>
+  </main>
+
+</div>
+
+<!-- 카테고리 브라우저 -->
+<section class="cat-browser">
+  <h2>제품 분류별 규제 가이드</h2>
+  <div class="cat-tabs" id="cat-tabs"></div>
+  <div class="cat-grid" id="cat-grid"></div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
