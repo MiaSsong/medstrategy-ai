@@ -2,8 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { ClaudeStrategyService } from '../services/claude.service';
 import { StrategyRequest, ProductCategory, MarketCode } from '../types/strategy.types';
 
-const router  = Router();
-const service = new ClaudeStrategyService();
+const router = Router();
+
+// Lazy initialization — API 키 없이도 서버 기동 가능 (카테고리/시장 API는 정상 작동)
+let _service: ClaudeStrategyService | null = null;
+function getService(): ClaudeStrategyService {
+  if (!_service) _service = new ClaudeStrategyService();
+  return _service;
+}
 
 const VALID_CATEGORIES: ProductCategory[] = ['ivd', 'img', 'trt', 'digi', 'imp', 'cons'];
 const VALID_MARKETS:    MarketCode[]       = ['KR', 'US', 'EU', 'JP', 'CN', 'SEA'];
@@ -37,7 +43,7 @@ function validate(body: unknown): StrategyRequest {
 router.post('/strategy', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const strategyReq = validate(req.body);
-    const result      = await service.generateStrategy(strategyReq);
+    const result      = await getService().generateStrategy(strategyReq);
     res.status(200).json({
       success: true,
       data:    result,
